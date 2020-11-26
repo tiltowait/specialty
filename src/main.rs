@@ -1,25 +1,22 @@
-use std::env;
 use rand::distributions::{Distribution, Uniform};
 
 fn main() {
-  let args: Vec<String> = env::args().collect();
-  assert!(args.len() == 4, "Supply pool and difficulty!");
+  let args: Vec<String> = std::env::args().collect();
+  assert!(args.len() == 4, "Usage: ./specialty <pool> <difficulty> <target>");
 
-  let pool: i16 = args[1].parse().unwrap();
-  let difficulty: i16 = args[2].parse().unwrap();
-  let target: i16 = args[3].parse().unwrap();
+  let pool: i16 = args[1].parse().expect("Pool must be a number!");
+  let difficulty: i16 = args[2].parse().expect("Difficulty must be a number!");
+  let target: i16 = args[3].parse().expect("Target must be a number!");
 
   let trials = 1_000_000;
 
   let mut successful_trials = 0;
   for _ in 0..trials {
-    if roll(pool, difficulty, target) {
-      successful_trials += 1;
-    }
+    successful_trials += if roll(pool, difficulty, target) { 1 } else { 0 };
   }
 
   let ratio = successful_trials as f64 / trials as f64;
-  println!("{}", ratio);
+  println!("{} diff {}: {}", pool, difficulty, ratio);
 }
 
 fn roll(pool: i16, difficulty: i16, target: i16) -> bool {
