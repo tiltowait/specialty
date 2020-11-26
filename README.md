@@ -4,4 +4,5 @@ A simple utility for calculating the probability of achieving at least a given n
 ## Usage
 `./specialty <pool> <difficulty> <target>`
 
-If `target` is unspecified, it will default to `1`, a marginal success or better.
+## Issues
+Save to make sure they're numbers, `specialty` does no error checking on its arguments. Thus, it will crash spectacularly if the pool is negative, has undefined behavior if the difficulty is negative, and will give useless results if the target is negative.
